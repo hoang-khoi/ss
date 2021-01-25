@@ -4,13 +4,13 @@ import (
 	"github.com/dgrijalva/jwt-go"
 )
 
-// JwtHs256Service implement Service using JWT HS256.
-type JwtHs256Service struct {
+// ServiceJwtHs256 implement Service using JWT HS256.
+type ServiceJwtHs256 struct {
 	Key []byte
 }
 
 // Generate issues a string token.
-func (j *JwtHs256Service) Generate(m *Model) string {
+func (j *ServiceJwtHs256) Generate(m *Model) (string, error) {
 	claims := jwt.StandardClaims{
 		Audience:  m.ID,
 		ExpiresAt: m.Expiry,
@@ -19,11 +19,11 @@ func (j *JwtHs256Service) Generate(m *Model) string {
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 	signedString, _ := token.SignedString(j.Key)
 
-	return signedString
+	return signedString, nil
 }
 
 // Verify checks token's authenticity and makes sure it is a correct token.
-func (j *JwtHs256Service) Verify(tokenString string) (*Model, error) {
+func (j *ServiceJwtHs256) Verify(tokenString string) (*Model, error) {
 	token, err := jwt.ParseWithClaims(tokenString, &jwt.StandardClaims{}, func(token *jwt.Token) (interface{}, error) {
 		return j.Key, nil
 	})

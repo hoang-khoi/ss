@@ -9,13 +9,13 @@ import (
 )
 
 func TestJwtHs256Service_Generate_Verify_CorrectToken(t *testing.T) {
-	service := JwtHs256Service{Key: []byte("secret")}
+	service := ServiceJwtHs256{Key: []byte("secret")}
 	origin := Model{
 		ID:     "khoi",
 		Expiry: time.Now().Add(time.Hour).Unix(),
 	}
 
-	stringToken := service.Generate(&origin)
+	stringToken, _ := service.Generate(&origin)
 	parsed, _ := service.Verify(stringToken)
 
 	assert.Equal(t, parsed, &origin)
@@ -23,7 +23,7 @@ func TestJwtHs256Service_Generate_Verify_CorrectToken(t *testing.T) {
 
 // Note: exp is covered by jwt.StandardClaims, no need to test
 func TestJwtHs256Service_Verify_WrongSignature(t *testing.T) {
-	service := JwtHs256Service{Key: []byte("secret")}
+	service := ServiceJwtHs256{Key: []byte("secret")}
 	stringToken := makeInvalidSignatureToken()
 	parsed, err := service.Verify(stringToken)
 
@@ -32,9 +32,11 @@ func TestJwtHs256Service_Verify_WrongSignature(t *testing.T) {
 }
 
 func makeInvalidSignatureToken() string {
-	service := JwtHs256Service{Key: []byte("wrongSecret")}
-	return service.Generate(&Model{
+	service := ServiceJwtHs256{Key: []byte("wrongSecret")}
+	token, _ := service.Generate(&Model{
 		ID:     "",
 		Expiry: 0,
 	})
+
+	return token
 }
