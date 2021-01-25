@@ -58,7 +58,10 @@ func TestServiceImp_Verify_UserNotFound(t *testing.T) {
 
 	repositoryMock.EXPECT().Find("koi").Return(nil, nil)
 
-	found, err := underTest.Verify("koi", "secret")
+	found, err := underTest.Verify(&Model{
+		ID:       "koi",
+		Password: "secret",
+	})
 
 	assert.Nil(t, err)
 	assert.False(t, found)
@@ -85,7 +88,10 @@ func TestServiceImp_Verify_WrongPassword(t *testing.T) {
 	)
 	pwdCryptMock.EXPECT().Match("hashedSecret", "secret").Return(true)
 
-	found, err := underTest.Verify("koi", "secret")
+	found, err := underTest.Verify(&Model{
+		ID:       "koi",
+		Password: "secret",
+	})
 
 	assert.Nil(t, err)
 	assert.True(t, found)
@@ -105,7 +111,10 @@ func TestServiceImp_Verify_FindError(t *testing.T) {
 	errFind := errors.New("dummy")
 	repositoryMock.EXPECT().Find("koi").Return(nil, errFind)
 
-	_, err := underTest.Verify("koi", "secret")
+	_, err := underTest.Verify(&Model{
+		ID:       "koi",
+		Password: "secret",
+	})
 	assert.ErrorIs(t, err, errFind)
 }
 
@@ -123,6 +132,6 @@ func hasUserTestHelper(t *testing.T, user *Model, expected bool) {
 
 	repositoryMock.EXPECT().Find("koi").Return(user, nil)
 
-	found, _ := underTest.HasUser("koi")
+	found, _ := underTest.HasUser(&Model{ID: "koi"})
 	assert.Equal(t, expected, found)
 }

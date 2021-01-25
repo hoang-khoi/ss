@@ -17,17 +17,17 @@ func (u *ServiceImp) CreateNewUser(m *Model) error {
 }
 
 // HasUser returns true if there is a user with the given id.
-func (u *ServiceImp) HasUser(id string) (bool, error) {
-	user, err := u.Repository.Find(id)
+func (u *ServiceImp) HasUser(m *Model) (bool, error) {
+	user, err := u.Repository.Find(m.ID)
 	return user != nil, err
 }
 
 // Verify returns true if user ID and password is found in the repository.
-func (u *ServiceImp) Verify(id string, pwd string) (bool, error) {
-	user, err := u.Repository.Find(id)
+func (u *ServiceImp) Verify(m *Model) (bool, error) {
+	user, err := u.Repository.Find(m.ID)
 	if err != nil {
 		return false, err
 	}
 
-	return user != nil && u.PwdCrypt.Match(user.Password, pwd), nil
+	return user != nil && u.PwdCrypt.Match(user.Password, m.Password), nil
 }
