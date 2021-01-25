@@ -12,7 +12,7 @@ func TestJwtHs256Service_Generate_Verify_CorrectToken(t *testing.T) {
 	service := JwtHs256Service{Key: []byte("secret")}
 	origin := Model{
 		ID:     "khoi",
-		expiry: time.Now().Add(time.Hour).Unix(),
+		Expiry: time.Now().Add(time.Hour).Unix(),
 	}
 
 	stringToken := service.Generate(&origin)
@@ -35,6 +35,6 @@ func makeInvalidSignatureToken() string {
 	service := JwtHs256Service{Key: []byte("wrongSecret")}
 	return service.Generate(&Model{
 		ID:     "",
-		expiry: 0,
+		Expiry: 0,
 	})
 }

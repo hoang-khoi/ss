@@ -13,7 +13,7 @@ type JwtHs256Service struct {
 func (j *JwtHs256Service) Generate(m *Model) string {
 	claims := jwt.StandardClaims{
 		Audience:  m.ID,
-		ExpiresAt: m.expiry,
+		ExpiresAt: m.Expiry,
 	}
 
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
@@ -36,7 +36,7 @@ func (j *JwtHs256Service) Verify(tokenString string) (*Model, error) {
 
 	model := &Model{
 		ID:     stdClaim.Audience,
-		expiry: stdClaim.ExpiresAt,
+		Expiry: stdClaim.ExpiresAt,
 	}
 
 	return model, nil
