@@ -4,4 +4,5 @@ package user
 type Service interface {
 	CreateNewUser(id string, pwd string) error
 	HasUser(id string) (bool, error)
+	Verify(id string, pwd string) (bool, error)
 }
