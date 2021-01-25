@@ -28,7 +28,10 @@ func TestServiceImp_CreateNewUser(t *testing.T) {
 		Password: "hashedSecret",
 	})
 
-	_ = underTest.CreateNewUser("koi", "secret")
+	_ = underTest.CreateNewUser(&Model{
+		ID:       "koi",
+		Password: "secret",
+	})
 }
 
 func TestServiceImp_HasUser(t *testing.T) {

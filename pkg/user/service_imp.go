@@ -11,11 +11,9 @@ type ServiceImp struct {
 }
 
 // CreateNewUser persists user's ID and hashed password. Need to check for existing user with HasUser.
-func (u *ServiceImp) CreateNewUser(id string, pwd string) error {
-	return u.Repository.Create(&Model{
-		ID:       id,
-		Password: u.PwdCrypt.Hash(pwd),
-	})
+func (u *ServiceImp) CreateNewUser(m *Model) error {
+	m.Password = u.PwdCrypt.Hash(m.Password)
+	return u.Repository.Create(m)
 }
 
 // HasUser returns true if there is a user with the given id.
