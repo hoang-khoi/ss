@@ -28,7 +28,7 @@ func (j *ServiceJwtHs256) Verify(tokenString string) (*Model, error) {
 		return j.Key, nil
 	})
 
-	if token == nil || !token.Valid {
+	if err != nil || token == nil || !token.Valid {
 		return nil, err
 	}
 
