@@ -1,13 +1,13 @@
 package user
 
 import (
-	"ss/pkg/crypt"
+	"ss/pkg/pwdcrypt"
 )
 
 // ServiceImp provides simple and secured implementation for Service.
 type ServiceImp struct {
 	Repository Repository
-	PwdCrypt   crypt.Service
+	PwdCrypt   pwdcrypt.Service
 }
 
 // CreateNewUser persists user's ID and hashed password. Need to check for existing user with HasUser.

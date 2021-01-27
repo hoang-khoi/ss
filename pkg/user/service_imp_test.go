@@ -2,7 +2,7 @@ package user
 
 import (
 	"errors"
-	"ss/pkg/crypt"
+	"ss/pkg/pwdcrypt"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -15,7 +15,7 @@ func TestServiceImp_CreateNewUser(t *testing.T) {
 	defer ctrl.Finish()
 
 	repositoryMock := NewMockRepository(ctrl)
-	pwdCryptMock := crypt.NewMockService(ctrl)
+	pwdCryptMock := pwdcrypt.NewMockService(ctrl)
 
 	underTest := ServiceImp{
 		Repository: repositoryMock,
@@ -49,7 +49,7 @@ func TestServiceImp_Verify_UserNotFound(t *testing.T) {
 	defer ctrl.Finish()
 
 	repositoryMock := NewMockRepository(ctrl)
-	pwdCryptMock := crypt.NewMockService(ctrl)
+	pwdCryptMock := pwdcrypt.NewMockService(ctrl)
 
 	underTest := ServiceImp{
 		Repository: repositoryMock,
@@ -72,7 +72,7 @@ func TestServiceImp_Verify_WrongPassword(t *testing.T) {
 	defer ctrl.Finish()
 
 	repositoryMock := NewMockRepository(ctrl)
-	pwdCryptMock := crypt.NewMockService(ctrl)
+	pwdCryptMock := pwdcrypt.NewMockService(ctrl)
 
 	underTest := ServiceImp{
 		Repository: repositoryMock,
@@ -102,7 +102,7 @@ func TestServiceImp_Verify_FindError(t *testing.T) {
 	defer ctrl.Finish()
 
 	repositoryMock := NewMockRepository(ctrl)
-	pwdCryptMock := crypt.NewMockService(ctrl)
+	pwdCryptMock := pwdcrypt.NewMockService(ctrl)
 
 	underTest := ServiceImp{
 		Repository: repositoryMock,
@@ -123,7 +123,7 @@ func hasUserTestHelper(t *testing.T, user *Model, expected bool) {
 	defer ctrl.Finish()
 
 	repositoryMock := NewMockRepository(ctrl)
-	pwdCryptMock := crypt.NewMockService(ctrl)
+	pwdCryptMock := pwdcrypt.NewMockService(ctrl)
 
 	underTest := ServiceImp{
 		Repository: repositoryMock,
