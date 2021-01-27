@@ -1,4 +1,4 @@
-package crypt
+package pwdcrypt
 
 import "golang.org/x/crypto/bcrypt"
 

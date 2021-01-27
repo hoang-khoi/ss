@@ -1,4 +1,4 @@
-package crypt
+package pwdcrypt
 
 import (
 	"testing"
